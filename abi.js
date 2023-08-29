@@ -1,4 +1,4 @@
-[
+export const abi_AuroraTokenTribute = [
   {
     inputs: [{ internalType: "address", name: "earthPrice", type: "address" }],
     stateMutability: "nonpayable",

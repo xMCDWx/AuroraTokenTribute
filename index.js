@@ -1,10 +1,13 @@
 import { ethers } from "./ethers-5.6.esm.min.js";
+import { abi_AuroraTokenTribute } from "./abi.js";
 
 const connectButton = document.getElementById("connectButton");
 const executeButton = document.getElementById("executeButton");
+const payButton = document.getElementById("payButton");
 
 connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
+payButton.addEventListener("click", pay);
 
 async function connect(){
     if (typeof window.ethereum !== "undefined"){
@@ -29,75 +32,18 @@ async function execute(){
         // Contract Address: The address of the contract that we want to interact with.
         const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
         // ABI: The commands that the contract understands.
-        const abi = [
-            {
-            inputs: [{ internalType: "address", name: "earthPrice", type: "address" }],
-            stateMutability: "nonpayable",
-            type: "constructor",
-            },
-            { inputs: [], name: "NotElite", type: "error" },
-            { stateMutability: "payable", type: "fallback" },
-            {
-            inputs: [{ internalType: "uint256", name: "_index", type: "uint256" }],
-            name: "citizenID",
-            outputs: [{ internalType: "address", name: "", type: "address" }],
-            stateMutability: "view",
-            type: "function",
-            },
-            {
-            inputs: [],
-            name: "collectRiches",
-            outputs: [],
-            stateMutability: "nonpayable",
-            type: "function",
-            },
-            {
-            inputs: [],
-            name: "getEliteBaseDescription",
-            outputs: [{ internalType: "string", name: "", type: "string" }],
-            stateMutability: "view",
-            type: "function",
-            },
-            {
-            inputs: [],
-            name: "getEliteBaseVersion",
-            outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-            stateMutability: "view",
-            type: "function",
-            },
-            {
-            inputs: [],
-            name: "payTribute",
-            outputs: [],
-            stateMutability: "payable",
-            type: "function",
-            },
-            {
-            inputs: [{ internalType: "address", name: "_citizenID", type: "address" }],
-            name: "tributeAmountByCitizens",
-            outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-            stateMutability: "view",
-            type: "function",
-            },
-            {
-            inputs: [],
-            name: "whoIsInCharge",
-            outputs: [{ internalType: "address", name: "", type: "address" }],
-            stateMutability: "view",
-            type: "function",
-            },
-            { stateMutability: "payable", type: "receive" },
-        ];
+        // I imported the ABI in a separate file.
         // Provider: In this case Metamask LocalHost Data.
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         // Signer: Our Address.
         const signer = provider.getSigner();
         // Contract: Use all the constants to create a contract instance.
-        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
         // Execute: Call the contract.
         try {
             const address = await contract.whoIsInCharge()
             console.log(address);
+            showMessage(`Your Boss ID is: ${address}`, 10000);
         }
         catch (error){
             console.log(error);
@@ -106,4 +52,33 @@ async function execute(){
     else {
         executeButton.innerHTML = "Please Install Metamask";
     }
+}
+
+async function pay(){
+    if (typeof window.ethereum !== "undefined"){
+ 
+        const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
+        try {
+            const uint256 = await contract.payTribute({value: ethers.utils.parseEther("0.1")})
+            console.log("Thank you for your donation");
+            showMessage("Thank you for your donation", 10000);
+        }
+        catch (error){
+            console.log(error);
+        }
+    }
+    else {
+        executeButton.innerHTML = "Please Install Metamask";
+    }
+}
+
+function showMessage(message, duration) {
+    const messageElement = document.getElementById("message");
+    messageElement.innerHTML = message;
+    setTimeout(() => {
+        messageElement.innerHTML = "";
+    }, duration);
 }
