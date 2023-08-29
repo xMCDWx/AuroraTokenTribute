@@ -23,3 +23,10 @@ button:hover {
     color: white;
     text-align: center;
 }
+
+.logo {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}
