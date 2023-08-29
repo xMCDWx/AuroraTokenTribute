@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(to bottom, black, purple);
+    background: rgb(77, 24, 77);
     text-align: center;
 }
 p {
@@ -9,10 +9,11 @@ p {
     margin-top: 100px;
 }
 button {
+    font-family: 'Press Start 2P', sans-serif;
     font-size: 24px;
     padding: 16px 32px;
     background-color: white;
-    color: black;
+    color: rgb(77, 24, 77);
     border: none;
     border-radius: 8px;
     margin: 16px;
@@ -29,4 +30,11 @@ button:hover {
     font-size: 48px;
     color: #fff;
     text-shadow: 2px 2px #000;
+}
+.message {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 20px;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+
 }

@@ -17,6 +17,7 @@ async function connect(){
         catch (error){
             console.error("User denied account access");
         }
+        
         connectButton.innerHTML = "Connected";
         const accounts = await ethereum.request({ method: "eth_accounts" });
         console.log(accounts);
@@ -38,6 +39,13 @@ async function execute(){
         // Signer: Our Address.
         const signer = provider.getSigner();
         // Contract: Use all the constants to create a contract instance.
+        const network = await provider.getNetwork();
+
+        if (network.chainId !== 11155111) {
+            showMessage("Please connect to the Sepolia network", 5000);
+            return;
+        }
+        
         const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
         // Execute: Call the contract.
         try {
@@ -60,6 +68,13 @@ async function pay(){
         const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
+        const network = await provider.getNetwork();
+
+        if (network.chainId !== 11155111) {
+            showMessage("Please connect to the Sepolia network", 5000);
+            return;
+        }
+
         const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
         try {
             const uint256 = await contract.payTribute({value: ethers.utils.parseEther("0.1")})
