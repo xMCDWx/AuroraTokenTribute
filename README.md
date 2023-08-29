@@ -1,66 +1,49 @@
-## Foundry
+## Aurora Token Tribute
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+**Welcome to the galaxy...**
 
-Foundry consists of:
+As a citizen, your duty consist in:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+-   **Pay Tribute**: With Aurora Tokens.
+-   **Pay More Tribute**: By working hard for the future of the galaxy.
+-   **Pay with your Life**: In case you have no more energy.
 
 ## Documentation
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
+### Pay Tribute
 
 ```shell
-$ forge build
+$ Your tribute must be higher than 5 USD.
 ```
 
-### Test
+### Collect Riches
 
 ```shell
-$ forge test
+$ Secret Command only available for the Elites in charge.
 ```
 
-### Format
+### Citizen ID
 
 ```shell
-$ forge fmt
+$ Tracks the Citizen ID, based on the time they payed their Tribute.
 ```
 
-### Gas Snapshots
+### Get Elite Base Description & Version
 
 ```shell
-$ forge snapshot
+$ Allows the Citizen admire the Version and Currency of the Elites.
 ```
 
-### Anvil
+### Tribute Amount by Citizens
 
 ```shell
-$ anvil
+$ Allows the Citizen to check which Citizen payed the Tribute.
 ```
 
-### Deploy
+### Who Is In Charge
 
 ```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+$ Allows the Citizen to see the ID of who is in Charge.
 ```
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+by MCDW Entertainment.
