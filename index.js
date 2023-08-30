@@ -4,13 +4,19 @@ import { abi_AuroraTokenTribute } from "./abi.js";
 const connectButton = document.getElementById("connectButton");
 const executeButton = document.getElementById("executeButton");
 const payButton = document.getElementById("payButton");
+let connected = false;
 
 connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
 payButton.addEventListener("click", pay);
 
 async function connect(){
-    if (typeof window.ethereum !== "undefined"){
+    
+    if (connected){
+        showMessage(`You already did this...!`, 5000);
+        return
+    }
+    else if (connected === false && typeof window.ethereum !== "undefined"){
         try {
             await ethereum.request({ method: "eth_requestAccounts" });
         }
@@ -20,7 +26,10 @@ async function connect(){
         
         connectButton.innerHTML = "Connected";
         const accounts = await ethereum.request({ method: "eth_accounts" });
+        showMessage(`Welcome to MCDW!`, 5000);
         console.log(accounts);
+        connected = true;
+        return
     }
     else {
         connectButton.innerHTML = "Please Install Metamask";
@@ -79,7 +88,7 @@ async function pay(){
         try {
             const uint256 = await contract.payTribute({value: ethers.utils.parseEther("0.1")})
             console.log("Thank you for your donation");
-            showMessage("Thank you for your donation", 10000);
+            showMessage("Thank you for your donation", 5000);
         }
         catch (error){
             console.log(error);
