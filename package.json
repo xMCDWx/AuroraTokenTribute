@@ -2,5 +2,9 @@
   "dependencies": {
     "browserify": "^17.0.0",
     "ethers": "^6.7.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   }
 }

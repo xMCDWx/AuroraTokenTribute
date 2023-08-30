@@ -1,64 +1,73 @@
+/////////////////////////////////////////////////////////////
+//   _____ ______   ________  ________  ___       __       //
+// |\   _ \  _   \|\   ____\|\   ___ \|\  \     |\  \      //
+// \ \  \\\__\ \  \ \  \___|\ \  \_|\ \ \  \    \ \  \     //
+//  \ \  \\|__| \  \ \  \    \ \  \ \\ \ \  \  __\ \  \    //
+//   \ \  \    \ \  \ \  \____\ \  \_\\ \ \  \|\__\_\  \   //
+//    \ \__\    \ \__\ \_______\ \_______\ \____________\  //
+//     \|__|     \|__|\|_______|\|_______|\|____________|  //
+//                                                         //
+/////////////////////////////////////////////////////////////                                                   
+                                                      
+//IMPORTS
 import { ethers } from "./ethers-5.6.esm.min.js";
 import { abi_AuroraTokenTribute } from "./abi.js";
 
+//BUTTON CONSTANTS
 const connectButton = document.getElementById("connectButton");
 const executeButton = document.getElementById("executeButton");
 const payButton = document.getElementById("payButton");
-let connected = false;
-
+const collectButton = document.getElementById("collectButton");
+//BUTTON EVENT LISTENERS
 connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
 payButton.addEventListener("click", pay);
+collectButton.addEventListener("click", collect);
 
+//CONTRACT CONSTANTS
+const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+const network = await provider.getNetwork();
+const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
+
+//ENVIRONMENTAL CONSTANTS
+let connected = false;
 startInactivityTimer();
 
+//FUNCTIONS
 async function connect(){
-    
     if (connected){
         showMessage(`You already did this...!`, 5000);
         return
     }
-    else if (connected === false && typeof window.ethereum !== "undefined"){
+    if (!connected && typeof window.ethereum !== "undefined"){
         try {
-            await ethereum.request({ method: "eth_requestAccounts" });
+            const accounts = await ethereum.request({ method: "eth_accounts" });
+            showMessage(`Welcome to MCDW!`, 5000);
+            console.log(accounts);
+            connectButton.innerHTML = "Connected";
+            connected = true;
         }
         catch (error){
             console.error("User denied account access");
         }
-        
-        connectButton.innerHTML = "Connected";
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        showMessage(`Welcome to MCDW!`, 5000);
-        console.log(accounts);
-        connected = true;
-        return
     }
     else {
-        connectButton.innerHTML = "Please Install Metamask";
-        console.log("No ethereum browser detected");
+        showMessage("Please install Metamask", 5000);
     }
 }
 
 async function execute(){
+    if (!connected){
+        showMessage(`Please connect...!`, 5000);
+        return
+    }
     if (typeof window.ethereum !== "undefined"){
-        // Contract Address: The address of the contract that we want to interact with.
-        const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
-        // ABI: The commands that the contract understands.
-        // I imported the ABI in a separate file.
-        // Provider: In this case Metamask LocalHost Data.
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        // Signer: Our Address.
-        const signer = provider.getSigner();
-        // Contract: Use all the constants to create a contract instance.
-        const network = await provider.getNetwork();
-
         if (network.chainId !== 11155111) {
             showMessage("Please connect to the Sepolia network", 5000);
             return;
         }
-        
-        const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
-        // Execute: Call the contract.
         try {
             const address = await contract.whoIsInCharge()
             console.log(address);
@@ -69,24 +78,22 @@ async function execute(){
         }
     }
     else {
-        executeButton.innerHTML = "Please Install Metamask";
+        showMessage("Please install Metamask", 5000);
+            return;
     }
 }
 
 async function pay(){
+    if (!connected){
+        showMessage(`Please connect...!`, 5000);
+        return
+    }
+    
     if (typeof window.ethereum !== "undefined"){
- 
-        const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const network = await provider.getNetwork();
-
         if (network.chainId !== 11155111) {
             showMessage("Please connect to the Sepolia network", 5000);
             return;
         }
-
-        const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
         try {
             const uint256 = await contract.payTribute({value: ethers.utils.parseEther("0.1")})
             console.log("Thank you for your donation");
@@ -98,10 +105,39 @@ async function pay(){
         }
     }
     else {
-        executeButton.innerHTML = "Please Install Metamask";
+        showMessage("Please install Metamask", 5000);
+            return;
     }
 }
 
+async function collect(){
+    if (!connected){
+        showMessage(`Please connect...!`, 5000);
+        return
+    }
+    
+    if (typeof window.ethereum !== "undefined"){
+        if (network.chainId !== 11155111) {
+            showMessage("Please connect to the Sepolia network", 5000);
+            return;
+        }
+        try {
+            const uint256 = await contract.collectRiches()
+            console.log("Glory to the Elites!");
+            showMessage("Glory to the Elites!", 5000);
+        }
+        catch (error){
+            console.log(error);
+            showMessage("You're probably not an Elite", 5000);
+        }
+    }
+    else {
+        showMessage("Please install Metamask", 5000);
+            return;
+    }
+}
+
+//MESSAGE WINDOW
 function showMessage(message, duration) {
     const messageElement = document.getElementById("message");
     messageElement.innerHTML = message;
@@ -110,6 +146,7 @@ function showMessage(message, duration) {
     }, duration);
 }
 
+//TIMER GAME
 function startInactivityTimer() {
     const messages = [
       "Are you there...? Do something!",
