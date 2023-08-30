@@ -10,6 +10,8 @@ connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
 payButton.addEventListener("click", pay);
 
+startInactivityTimer();
+
 async function connect(){
     
     if (connected){
@@ -92,6 +94,7 @@ async function pay(){
         }
         catch (error){
             console.log(error);
+            showMessage("Cheap bastard...!", 5000);
         }
     }
     else {
@@ -106,3 +109,32 @@ function showMessage(message, duration) {
         messageElement.innerHTML = "";
     }, duration);
 }
+
+function startInactivityTimer() {
+    const messages = [
+      "Are you there...? Do something!",
+      "Hey, wake up! Do something!",
+      "Don't fall asleep on me now! Do something!",
+    ];
+  
+    let timer;
+  
+    function resetTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        console.log(message);
+        showMessage(message, 5000);
+        resetTimer();
+      }, 10000);
+    }
+  
+    function onActivity() {
+      resetTimer();
+    }
+  
+    document.addEventListener("mousemove", onActivity);
+    document.addEventListener("keydown", onActivity);
+  
+    resetTimer();
+  }
