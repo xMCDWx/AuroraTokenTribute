@@ -18,11 +18,13 @@ const connectButton = document.getElementById("connectButton");
 const executeButton = document.getElementById("executeButton");
 const payButton = document.getElementById("payButton");
 const collectButton = document.getElementById("collectButton");
+const gameButton = document.getElementById("gameButton");
 //BUTTON EVENT LISTENERS
 connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
 payButton.addEventListener("click", pay);
 collectButton.addEventListener("click", collect);
+gameButton.addEventListener("click", game);
 
 //CONTRACT CONSTANTS
 const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
@@ -136,6 +138,10 @@ async function collect(){
             return;
     }
 }
+
+function game() {
+    window.location.href = "game/game.html";
+  }
 
 //MESSAGE WINDOW
 function showMessage(message, duration) {
