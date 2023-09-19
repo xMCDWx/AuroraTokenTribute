@@ -1,0 +1,7 @@
+AddEncoding br .br
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript
+</IfModule>
+<IfModule mod_headers.c>
+  Header append Vary Accept-Encoding
+</IfModule>
