@@ -12,6 +12,7 @@
 //IMPORTS
 import { ethers } from "./ethers-5.6.esm.min.js";
 import { abi_AuroraTokenTribute } from "./abi.js";
+import { abi_MoodNft } from "./abi2.js";
 
 //BUTTON CONSTANTS
 const connectButton = document.getElementById("connectButton");
@@ -19,12 +20,14 @@ const executeButton = document.getElementById("executeButton");
 const payButton = document.getElementById("payButton");
 const collectButton = document.getElementById("collectButton");
 const gameButton = document.getElementById("gameButton");
+const mintButton = document.getElementById("mintButton");
 //BUTTON EVENT LISTENERS
 connectButton.addEventListener("click", connect);
 executeButton.addEventListener("click", execute);
 payButton.addEventListener("click", pay);
 collectButton.addEventListener("click", collect);
 gameButton.addEventListener("click", game);
+mintButton.addEventListener("click", mint);
 
 //CONTRACT CONSTANTS
 const contractAddress = "0x893817970d0979b1728FADAADef9F13D33c666D1"
@@ -32,6 +35,11 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 const network = await provider.getNetwork();
 const contract = new ethers.Contract(contractAddress, abi_AuroraTokenTribute, signer);
+
+
+//NFT CONSTANTS
+const contractAddress_m = "0x3e7abf98C143118314B95fc8A4d8C7bDE75121FC"
+const contract_m = new ethers.Contract(contractAddress_m, abi_MoodNft, signer);
 
 //ENVIRONMENTAL CONSTANTS
 let connected = false;
@@ -142,6 +150,33 @@ async function collect(){
 function game() {
     window.location.href = "game/game.html";
   }
+
+  async function mint(){
+    if (!connected){
+        showMessage(`Please connect...!`, 5000);
+        return
+    }
+    
+    if (typeof window.ethereum !== "undefined"){
+        if (network.chainId !== 11155111) {
+            showMessage("Please connect to the Sepolia network", 5000);
+            return;
+        }
+        try {
+            const uint256 = await contract_m.mintNft()
+            console.log("Enjoy the game");
+            showMessage("Enjoy the game", 5000);
+        }
+        catch (error){
+            console.log(error);
+            showMessage("You don't want to play with the new character?", 5000);
+        }
+    }
+    else {
+        showMessage("Please install Metamask", 5000);
+            return;
+    }
+}
 
 //MESSAGE WINDOW
 function showMessage(message, duration) {
