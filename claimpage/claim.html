@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Lucifer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: url("bg.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        color: white;
+        font-family: "Oswald", sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .header {
+        position: absolute;
+        font-size: 2.5em;
+        font-weight: 700;
+        top: 6px;
+        left: 200px;
+        transform: translateX(0%);
+        text-align: center;
+      }
+      .text-box {
+        position: absolute;
+        text-align: justify;
+        font-size: 1em;
+        font-weight: 200;
+        top: 235px;
+        left: 200px;
+        width: 570px;
+        margin: auto;
+      }
+      .timer {
+        font-size: 2em;
+      }
+      #claimButton {
+        background-color: #ff0000;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      #connectButton {
+        background-color: #ff0000;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      .icons {
+        position: absolute;
+        top: 170px;
+        left: 200px;
+        transform: translateX(0%);
+      }
+      .icons img {
+        width: 20px;
+        height: auto;
+        margin-right: 10px;
+      }
+      .character {
+        position: absolute;
+        z-index: 2;
+        right: 40px;
+        bottom: 0px;
+        width: auto;
+        height: auto;
+      }
+      .behind {
+        position: absolute;
+        z-index: 1;
+        right: 13px;
+        bottom: 200px;
+        width: auto;
+        height: auto;
+      }
+      .mask {
+        position: absolute;
+        bottom: 130px;
+        left: 470px;
+        width: auto;
+        height: auto;
+      }
+      .japanese {
+        position: absolute;
+        bottom: 90px;
+        left: 470px;
+        width: auto;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="arrows.png"
+      alt="Arrows"
+      style="position: absolute; top: 90px; left: 0px; width: 180px"
+    />
+    <div class="header">
+      <h1>PROJECT LUCIFER</h1>
+    </div>
+    <div class="icons">
+      <img src="etherscan.png" alt="Etherscan" />
+      <img src="opensea.png" alt="Opensea" />
+    </div>
+    <img
+      src="character.png"
+      alt="Character"
+      class="character"
+      style="width: 550px"
+    />
+    <img
+      src="behind character.png"
+      alt="Behind"
+      class="behind"
+      style="width: 550px"
+    />
+    <div class="text-box">
+      <p>
+        The Lucifer project consisted of replicating individuals similar to male
+        homo sapiens. Their intelligence was artificially boosted. The first
+        generations were moved to a small planet surrounded by a dome. For some
+        reason, the individuals encountered after a short period and replaced by
+        a new generation.
+      </p>
+      <button id="connectButton">Connect</button>
+      <button id="claimButton">Claim</button>
+      <div class="content">
+        <p id="tokensLeft">??? left to claim</p>
+      </div>
+    </div>
+    <img src="mask.png" alt="Mask" class="mask" style="width: 180px" />
+    <img
+      src="japanese.png"
+      alt="Japanese"
+      class="japanese"
+      style="width: 180px"
+    />
+    <script type="module" src="claim.js"></script>
+  </body>
+</html>
